@@ -1,0 +1,24 @@
+services:
+  gstr9c:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: finaxis-gstr9c
+    env_file:
+      - .env
+    environment:
+      GST_FILES_DIR: /data/gst
+      GSTZEN_API_KEY: ${GSTZEN_API_KEY:-}
+      GSTZEN_USERNAME: ${GSTZEN_USERNAME:-}
+      GSTZEN_PASSWORD: ${GSTZEN_PASSWORD:-}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY:-}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-}
+    volumes:
+      - gst_files:/data/gst
+    ports:
+      - "8789:8789"
+    restart: unless-stopped
+
+volumes:
+  gst_files:
